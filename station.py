@@ -99,7 +99,11 @@ class Station(Conference):
         self.file_dir = self.output_dir + os.sep + self.ServerName
         self.uid = os.getuid()
         self.odd_pid = get_pid('^edcast_jack', self.uid)
-        self.deefuzzer_pid = get_pid('/usr/bin/deefuzzer '+self.deefuzzer_user_file, self.uid)
+        if os.path.exists('/usr/local/bin/deefuzzer'):
+            self.deefuzzer_path = '/usr/local/bin/deefuzzer'
+        elif os.path.exists('/usr/bin/deefuzzer'):
+            self.deefuzzer_path = '/usr/bin/deefuzzer'
+        self.deefuzzer_pid = get_pid(self.deefuzzer_path+' '+self.deefuzzer_user_file, self.uid)
         self.new_title = clean_string('-'.join(self.server_name)+'-'+self.session+'-'+self.professor+'-'+self.comment)
         self.short_title = clean_string('-'.join(self.conference)+'-'+self.session+'-'+self.professor+'-'+self.comment)
         self.genre = self.conf['infos']['genre']
@@ -168,13 +172,13 @@ class Station(Conference):
         os.remove(self.lock_file)
 
     def deefuzzer_stop(self):
-	if len(self.deefuzzer_pid) != 0:
-	    os.system('kill -9 '+self.deefuzzer_pid[0])
+        if len(self.deefuzzer_pid) != 0:
+            os.system('kill -9 '+self.deefuzzer_pid[0])
 
     def rec_stop(self):
         if len(self.deefuzzer_pid) != 0:
-	    for port in self.deefuzzer_osc_ports:
-		target = liblo.Address(int(port))
+            for port in self.deefuzzer_osc_ports:
+                target = liblo.Address(int(port))
                 liblo.send(target, '/record', 0)
 
     def mp3_convert(self):
