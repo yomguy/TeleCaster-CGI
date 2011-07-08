@@ -54,6 +54,12 @@ jack_connect jack_rack:out_1  LIVE:in_2
 
 # Start safe DeeFuzzer
 deefuzzer /etc/telecaster/deefuzzer_safe.xml > /dev/null &
+/home/telecaster/apps/telecaster/tools/ffmpeg_dv_jack_fifo_shout start > /dev/null &
+sleep 3
+
+jack_disconnect system:capture_1 gst-launch-0.10:in_jackaudiosrc0_1
+jack_connect jack_rack:out_1  gst-launch-0.10:in_jackaudiosrc0_1
+
 
 } &
 
