@@ -187,6 +187,9 @@ class WebView(FieldStorage):
 
         print "<div class=\"hardware\">"
         print "<div class=\"title\">Status</div>"
+
+        self.video()
+
         print "<table class=\"hardware\">"
         print "<tr><td>Name</td><TD> : </TD>"
         print "<td>%s</td></tr>" % self.conf['infos']['url']
@@ -274,6 +277,11 @@ class WebView(FieldStorage):
         print "</form>"
         self.colophon()
         self.footer()
+    
+    def video(self):
+        print "<div style=\"float : left;\">"
+        print "<video controls=\"controls\" preload=\"auto\" autoplay=\"auto\" ><source src=\"http://"+self.ip+":8000/telecaster_live_video.ogg\" type=\"video/ogg\" /></video>"
+        print "</div>"
 
     def stop_form(self, conference_dict, writing, casting):
         department = conference_dict['department']
@@ -284,7 +292,7 @@ class WebView(FieldStorage):
         self.mount_point ='_-_'.join([self.short_name,department,conference])+'.'+self.format
         self.writing = writing
         self.casting = casting
-        self.refresh = True
+        self.refresh = False
 
         self.header()
         self.sub_header()
@@ -299,7 +307,7 @@ class WebView(FieldStorage):
         print "<TR><TH align=\"left\">Session</TH><TD> : </TD><TD>"+session+"</TD></TR>"
         print "<TR><TH align=\"left\">Professeur</TH><TD> : </TD><TD>"+professor+"</TD></TR>"
         print "<TR><TH align=\"left\">Commentaire</TH><TD> : </TD><TD>"+comment+"</TD></TR>"
-        print "</table>"
+        print "</table><br />"
         print "</div>"
         print "<div class=\"tools\">"
         print "<div class=\"buttons\">"
