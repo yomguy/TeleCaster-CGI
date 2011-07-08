@@ -7,7 +7,7 @@ case "$1" in
    dir=/tmp
    file=$dir/video_test.ogg
 
-   gst-launch v4l2src ! queue ! videorate ! video/x-raw-yuv,width=320 ! queue  ! theoraenc quality=60 ! queue ! muxout. jackaudiosrc connect=1 ! audioconvert ! audio/x-raw-int,rate=44100,channels=1,width=16 ! queue ! audioconvert ! vorbisenc ! queue ! muxout. oggmux name=muxout ! filesink location=$file sync=true &
+   gst-launch-0.10 v4l2src device=/dev/video0 ! queue ! videorate ! video/x-raw-yuv,width=320 ! queue  ! theoraenc quality=60 ! queue ! muxout. jackaudiosrc connect=1 ! audioconvert ! audio/x-raw-int,rate=44100,channels=1,width=16 ! queue ! audioconvert ! vorbisenc ! queue ! muxout. oggmux name=muxout ! filesink location=$file sync=true &
    
 #    gst-launch v4l2src ! queue ! videorate ! video/x-raw-yuv,fps=30,width=320 ! queue  ! theoraenc quality=60 ! queue ! muxout. jackaudiosrc connect=1 ! audioconvert ! audio/x-raw-int,rate=44100,channels=1,width=16 ! queue ! audioconvert ! vorbisenc ! queue ! muxout. oggmux name=muxout ! shout2send mount=/telecaster_live_video.ogg port=8000 password=source2parisson ip=127.0.0.1 &
    

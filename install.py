@@ -62,7 +62,7 @@ os.system('./configure; make; sudo make install')
 
 # installing deefuzzer
 os.chdir(app_dir + '/tools/deefuzzer')
-os.system('sudo python install.py')
+os.system('sudo python setup.py install')
 
 os.chdir(app_dir)
 install_dir = '/var/www/telecaster'
