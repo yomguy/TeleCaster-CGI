@@ -188,7 +188,7 @@ class WebView(FieldStorage):
         print "<div class=\"hardware\">"
         print "<div class=\"title\">Status</div>"
 
-        self.video()
+        #self.video()
 
         print "<table class=\"hardware\">"
         print "<tr><td>Name</td><TD> : </TD>"
