@@ -187,9 +187,6 @@ class WebView(FieldStorage):
 
         print "<div class=\"hardware\">"
         print "<div class=\"title\">Status</div>"
-
-        #self.video()
-
         print "<table class=\"hardware\">"
         print "<tr><td>Name</td><TD> : </TD>"
         print "<td>%s</td></tr>" % self.conf['infos']['url']
@@ -292,7 +289,7 @@ class WebView(FieldStorage):
         self.mount_point ='_-_'.join([self.short_name,department,conference])+'.'+self.format
         self.writing = writing
         self.casting = casting
-        self.refresh = False
+        self.refresh = True
 
         self.header()
         self.sub_header()

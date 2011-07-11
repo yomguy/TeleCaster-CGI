@@ -64,7 +64,7 @@ os.chdir(app_dir)
 install_dir = '/var/www/telecaster'
 if os.path.exists(install_dir):
     shutil.rmtree(install_dir)
-shutil.copytree(app_dir, install_dir,ignore=shutil.ignore_patterns('edcast-jack*', 'deefuzzer*', '*.svn*'))
+shutil.copytree(app_dir, install_dir,ignore=shutil.ignore_patterns('edcast-jack*', 'deefuzzer*', '*.svn*', '*.bzr*'))
 os.system('chown -R ' + user + ':' + user + ' ' + install_dir)
 
 conf_dir = '/etc/telecaster'

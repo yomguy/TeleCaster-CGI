@@ -35,10 +35,11 @@
 # Author: Guillaume Pellerin <yomguy@parisson.com>
 """
 
-version = '0.5.3'
+version = '0.5.4'
 
 
 import os
+import re
 import sys
 import pwd
 import cgi
@@ -113,6 +114,7 @@ class TeleCaster:
                     if '....' in value:
                         self.conference_dict[data] = 'Inconnu'
                     else:
+                        value = re.sub(r'\W+', '_', value) 
                         self.conference_dict[data] = value.decode('utf-8')
 
             self.conference_dict['title'] = self.title
