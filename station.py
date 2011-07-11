@@ -165,7 +165,7 @@ class Station(Conference):
         lock = open(self.lock_file,'w')
         lock_text = clean_string('_*_'.join(self.description))
         lock_text = lock_text.replace('\n','')
-        lock.write(lock_text)
+        lock.write(lock_text.encode('utf-8'))
         lock.close()
 
     def del_lock(self):

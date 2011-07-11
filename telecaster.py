@@ -113,7 +113,7 @@ class TeleCaster:
                     if '....' in value:
                         self.conference_dict[data] = 'Inconnu'
                     else:
-                        self.conference_dict[data] = value
+                        self.conference_dict[data] = value.decode('utf-8')
 
             self.conference_dict['title'] = self.title
             s = Station(self.conf_file, self.conference_dict, self.lock_file)
