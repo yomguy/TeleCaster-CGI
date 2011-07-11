@@ -60,10 +60,6 @@ if not os.path.exists(home):
 os.chdir(app_dir + '/tools/edcast-jack')
 os.system('./configure; make; sudo make install')
 
-# installing deefuzzer
-os.chdir(app_dir + '/tools/deefuzzer')
-os.system('sudo python setup.py install')
-
 os.chdir(app_dir)
 install_dir = '/var/www/telecaster'
 if os.path.exists(install_dir):
