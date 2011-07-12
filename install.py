@@ -125,7 +125,7 @@ print """
    Installation successfull !
    
    Now, please :
-   - configure your telecaster editing /etc/telecaster/telecaster.xml
+   - configure your telecaster editing /etc/telecaster/telecaster.xml and /etc/telecaster/deefuzzer.xml
    - configure your apache VirtualHost editing /etc/apache2/sites-available/telecaster.conf 
 
    And use the TeleCaster system browsing http://localhost/telecaster/telecaster.py
