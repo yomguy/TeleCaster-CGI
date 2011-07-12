@@ -57,7 +57,7 @@ if not os.path.exists(home):
     os.system('adduser ' + user)
 
 # compiling edcast-jack
-os.chdir(app_dir + '/tools/edcast-jack')
+os.chdir(app_dir + '/vendor/edcast-jack')
 os.system('./configure; make; sudo make install')
 
 os.chdir(app_dir)
