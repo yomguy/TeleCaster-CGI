@@ -178,8 +178,11 @@ class Station(Conference):
     def rec_stop(self):
         if len(self.deefuzzer_pid) != 0:
             for port in self.deefuzzer_osc_ports:
-                target = liblo.Address(int(port))
-                liblo.send(target, '/record', 0)
+                try:
+                    target = liblo.Address(int(port))
+                    liblo.send(target, '/record', 0)
+                except:
+                    continue
 
     def mp3_convert(self):
         os.system('oggdec -o - '+ self.file_dir+os.sep+self.filename+' | lame -S -m m -h -b '+ self.bitrate + \
@@ -230,3 +233,4 @@ class Station(Conference):
         time.sleep(2)
         self.deefuzzer_stop()
         self.del_lock()
+        
