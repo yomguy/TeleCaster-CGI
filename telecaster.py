@@ -35,8 +35,7 @@
 # Author: Guillaume Pellerin <yomguy@parisson.com>
 """
 
-version = '0.5.4'
-
+version = '0.5.5'
 
 import os
 import re
@@ -127,7 +126,6 @@ class TeleCaster:
         elif deefuzzer_pid != [] and os.path.exists(self.lock_file) and not form.has_key("action"):
             self.conference_dict = get_conference_from_lock(self.lock_file)
             form.stop_form(self.conference_dict, writing, casting)
-            self.logger.write_info('started')
 
         elif deefuzzer_pid and form.has_key("action") and form["action"].value == "stop":
             self.logger.write_info('stopping')
@@ -140,7 +138,6 @@ class TeleCaster:
 
         elif deefuzzer_pid == []:
             form.start_form(writing, casting)
-            self.logger.write_info('stopped')
 
 	elif deefuzzer_pid != []:
 	    os.system('kill -9 '+deefuzzer_pid[0])
@@ -152,5 +149,3 @@ if __name__ == '__main__':
     sys.stderr = sys.stdout
     t = TeleCaster(conf_file)
     t.main()
-
-
