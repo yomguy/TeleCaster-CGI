@@ -210,12 +210,12 @@ class AcpiLinux:
         try:
             battery_dir_entries = os.listdir(self.proc_battery_dir)
         except OSError:
-            ac_sys = open(self.ac_sys_dir+os.sep+'online')
-            state = ac_sys.readline()
-            if int(state):
-                self.ac_line_state = ONLINE
-            else:
-                self.ac_line_state = OFFLINE
+            self.ac_line_state = OFFLINE
+            if os.path.exists(self.ac_sys_dir):
+                ac_sys = open(self.ac_sys_dir+os.sep+'online')
+                state = ac_sys.readline()
+                if int(state):
+                    self.ac_line_state = ONLINE
             return   #nothing more to do
             
 
