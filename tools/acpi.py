@@ -40,7 +40,7 @@ import os,stat,sys
 
 #enums
 
-VERSION      = "0.3.0"
+VERSION      = "0.3.1"
 
 OFFLINE      =  0
 ONLINE       =  1
@@ -175,6 +175,8 @@ class AcpiLinux:
         #we read all acpi stuff from here
         self.proc_acpi_dir = "/proc/acpi"
         #self.proc_acpi_dir = "/home/riemer/main/ACPI/proc/acpi"
+        self.ac_sys_dir = '/sys/class/power_supply/AC'
+        self.bat_sys_dir = '/sys/class/power_supply/BAT0'
         
         self.init_batteries()
         self.init_fans()
@@ -182,7 +184,6 @@ class AcpiLinux:
         self.init_temperatures()
         
         self.update()
-
 
     def update(self):
         """Read current states of supported acpi components"""
@@ -209,7 +210,12 @@ class AcpiLinux:
         try:
             battery_dir_entries = os.listdir(self.proc_battery_dir)
         except OSError:
-            self.ac_line_state = ONLINE  # no batteries: we assume that a cable is plugged in ;-)
+            ac_sys = open(self.ac_sys_dir+os.sep+'online')
+            state = ac_sys.readline()
+            if int(state):
+                self.ac_line_state = ONLINE
+            else:
+                self.ac_line_state = OFFLINE
             return   #nothing more to do
             
 
@@ -467,6 +473,21 @@ class AcpiLinux:
     def percent(self):
         """Returns percentage capacity of all batteries"""
 
+        if os.path.exists(self.bat_sys_dir):
+            list = ['charge_full',  'energy_full']
+            for data in list:
+                path = self.bat_sys_dir+os.sep+data
+                if os.path.exists(path):
+                    _charge_full = open(path)
+                    charge_full = _charge_full.readline()
+            list = ['charge_now',  'energy_now']
+            for data in list:
+                path = self.bat_sys_dir+os.sep+data
+                if os.path.exists(path):
+                    _charge_now = open(path)
+                    charge_now = _charge_now.readline()
+            return (int(charge_now) * 100) / int(charge_full)
+            
         life_capacity = 0
         design_capacity = 0
         for i,c in self.life_capacity.items():

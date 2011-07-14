@@ -49,7 +49,7 @@ class WebView(FieldStorage):
         FieldStorage.__init__(self)
         self.conf = conf
         self.version = version
-        self.interfaces = ['eth0', 'eth1', 'eth2', 'eth0-eth2','eth3']
+        self.interfaces = ['eth0', 'eth1', 'eth2', 'eth0-eth2', 'eth3', 'wlan0']
         ip = ''
         for interface in self.interfaces:
             try:
@@ -155,7 +155,7 @@ class WebView(FieldStorage):
         self.acpi.update()
         self.power_state = self.acpi.charging_state()
         if self.power_state == 0:
-            power_info = "<span style=\"color: red\">batterie</span>"
+            power_info = "<span style=\"color: red\"><b>batterie</b></span>"
         elif self.power_state == 1 or self.power_state == 2:
             power_info = "<span style=\"color: green\">secteur</span>"
         else:
