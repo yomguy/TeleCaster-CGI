@@ -113,7 +113,7 @@ if not os.path.exists(home_dir):
 apache_conf = '/etc/apache2/sites-available/telecaster.conf'
 if not os.path.exists(apache_conf):
     shutil.copy('conf'+apache_conf, apache_conf)
-os.system('/etc/init.d/apache2 reload')
+#os.system('/etc/init.d/apache2 reload')
 
 log_dirs = ['/var/log/telecaster', '/var/log/deefuzzer']
 for  dir in log_dirs:
