@@ -174,12 +174,11 @@ class AcpiLinux:
 
         #we read all acpi stuff from here
         self.proc_acpi_dir = "/proc/acpi"
-        #self.proc_acpi_dir = "/home/riemer/main/ACPI/proc/acpi"
         self.ac_sys_dir = '/sys/class/power_supply/AC'
         self.bat_sys_dir = '/sys/class/power_supply/BAT0'
         
         self.init_batteries()
-        self.init_fans()
+        #self.init_fans()
         #self.init_processors()
         self.init_temperatures()
         
@@ -189,7 +188,7 @@ class AcpiLinux:
         """Read current states of supported acpi components"""
 
         self.update_batteries()
-        self.update_fans()
+        #self.update_fans()
         #self.update_processors()
         self.update_temperatures()
 
