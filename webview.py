@@ -192,6 +192,7 @@ class WebView(FieldStorage):
 
         print "<div class=\"hardware\">"
         print "<div class=\"title\">Status</div>"
+        self.video()
         print "<table class=\"hardware\">"
         print "<tr><td>Name</td><TD> : </TD>"
         print "<td>%s</td></tr>" % self.conf['infos']['url']
@@ -228,7 +229,6 @@ class WebView(FieldStorage):
         print "</div>"
         print "</td></tr>"
         print "</table>"
-        self.video()
         print "</div>"
 
 
@@ -282,7 +282,7 @@ class WebView(FieldStorage):
         self.footer()
     
     def video(self):
-        print "<div style=\"float : left;\">"
+        print "<div style=\"float : left; margin: 5px;\">"
         print "<video width=\"320\" height=\"180\" controls=\"controls\" preload=\"auto\" autoplay=\"auto\" ><source src=\"http://"+self.ip+":8000/telecaster_live_video.ogg\" type=\"video/ogg\" /></video>"
         print "</div>"
 
