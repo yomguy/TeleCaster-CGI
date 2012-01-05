@@ -72,19 +72,19 @@ os.system('chown -R ' + user + ':' + user + ' ' + install_dir)
 
 conf_dir = '/etc/telecaster'
 if not os.path.exists(conf_dir):
-    os.system('sudo mkdir '+conf_dir)
+    os.mkdir(conf_dir)
     os.system('sudo chown '+user+ ':'+user+' '+conf_dir)
 in_files = os.listdir('conf'+conf_dir)
 for file in in_files:
     if not os.path.exists(conf_dir+os.sep+file) and not '.svn' in file:
         shutil.copy('conf'+conf_dir+os.sep+file, conf_dir+os.sep+file)
 
-
 daemons = ['jackd', 'vncserver']
 dir = '/etc/init.d/'
 for daemon in daemons:
     path = dir + daemon
     shutil.copy('conf'+path, dir)
+    os.system('sudo chmod 755 '+path)
 
 dir = '/etc/default/'
 for daemon in daemons:
@@ -94,11 +94,11 @@ for daemon in daemons:
 
 init_link = '/etc/rc2.d/S97jackd'
 if not os.path.islink(init_link):
-    os.symlink('/etc/init.d/jackd ', init_link)
+    os.system('ln -s /etc/init.d/jackd '+init_link)
 
 init_link = '/etc/rc2.d/S99vncserver'
 if not os.path.islink(init_link):
-    os.symlink('/etc/init.d/vncserver ', init_link)
+    os.system('ln -s /etc/init.d/vncserver '+init_link)
 
 home_dirs = ['fluxbox', 'vnc']
 for dir in home_dirs:
