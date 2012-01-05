@@ -55,6 +55,7 @@ home = '/home/' + user
 if not os.path.exists(home):
     print 'Please give some informations for the new "telecaster" user :'
     os.system('adduser ' + user)
+    os.system('adduser ' + user + ' audio')
 
 # compiling edcast-jack
 os.chdir(app_dir + '/vendor/edcast-jack')
@@ -69,7 +70,7 @@ if os.path.exists(install_dir):
     shutil.rmtree(install_dir)
 shutil.copytree(app_dir, install_dir,ignore=shutil.ignore_patterns('edcast-jack*', 'deefuzzer*', '*.svn*', '*.bzr*'))
 os.system('chown -R ' + user + ':' + user + ' ' + install_dir)
-os.system('chmod 755 ' + install_dir + 'telecaster.py')
+os.system('chmod 755 ' + install_dir + '/telecaster.py')
 
 dir = '/var/www/rss'
 if not os.path.exists(dir):
