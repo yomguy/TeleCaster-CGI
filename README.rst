@@ -41,11 +41,14 @@ Needed::
                         icecast2 apache2 apache2-suexec jackd libjack-jackd2-dev vorbis-tools procps meterbridge fluxbox \
                         vnc4server vncviewer swh-plugins jack-rack libshout3 libshout3-dev libmad0-dev libogg-dev g++ \
                         libgstreamer0.10-0 gstreamer0.10-plugins-good gstreamer0.10-plugins-base gstreamer0.10-plugins-bad \
-                        gstreamer-tools git-core python-pip
+                        gstreamer-tools git-core python-pip make
 
-Optional::
+Cleanup::
 
     sudo aptitude remove --purge pulseaudio
+
+Additional formats::
+
     sudo aptitude install libfaac-dev libmp3lame-dev libflac-dev
 
 Note that obtaining and installing a preempt RT kernel is STRONGLY advised to get a good audio (JACK) stability.
@@ -78,11 +81,19 @@ Edit the following files to setup TeleCaster. Please be careful with the XML syn
 
     /etc/telecaster/telecaster.xml
 
-and, ONLY if needed::
+and tune your configuration according with your JACK setup, vnc port, icecast passwords, twitter keys, deefuzzer conf, etc...::
 
     /etc/default/jackd
     /etc/default/vncserver
+    /etc/default/icecast2
+    /etc/icecast2/icecast.xml
+    /etc/telecaster/deefuzzer_safe.xml
+    /etc/telecaster/deefuzzer.xml
 
+For more infos on how to configure the deefuzzer streaming tool, see ::
+
+    http://svn.parisson.org/deefuzzer
+    https://github.com/yomguy/DeeFuzzer
 
 5. Start audio deamons
 ------------------------
@@ -100,6 +111,7 @@ Configure your apache VirtualHost editing /etc/apache2/sites-available/telecaste
 
 Enable the VirtualHost::
 
+    sudo a2enmod suexec
     sudo a2ensite telecaster.conf
 
 Maybe remove the default VirtualHost::
@@ -114,7 +126,7 @@ Reload Apache::
 7. Usage
 ----------
 
-Browse the TeleCaster web control page:
+Browse the TeleCaster web control page::
 
     http://localhost/telecaster/telecaster.py
 
@@ -127,10 +139,10 @@ To change the form options, just edit the conf file as root::
 Contact
 =========
 
-Any questions, suggestions ? Please post a ticket on the dev platform:
+Any questions, suggestions ? Please post a ticket on the dev platform::
 
     https://github.com/yomguy/TeleCaster-CGI
 
-or contact the main developer:
+or contact the main developer::
 
     Guillaume Pellerin <yomguy@parisson.com>
