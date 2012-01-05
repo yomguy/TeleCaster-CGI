@@ -1,10 +1,26 @@
-==================
+
+TeleCaster is a web controlled audio/video recording and broadcasting system.
+It is written in python and freely available for Linux.
+
+
+ARCHITECTURE
+============
+Build and install well on Debian (>= Lenny) or Ubuntu/Kubuntu (>= 10.10)
+
+
+MORE INFOS
+==========
+
+GitHub: https://github.com/yomguy/TeleCaster-CGI
+Twitter : @parisson_studio
+
+
 INSTALL TeleCaster
 ==================
 
 
 1. Operating System
-===================
+--------------------
 
 TeleCaster now only works on GNU/Linux systems. The installer and the following instructions
 are based on Debian like software management so that it should work on Debian (>= Lenny) 
@@ -12,7 +28,7 @@ or Ubuntu / Kubuntu (>= 10.4). So please install one of these OS before.
 
 
 2. Install dependencies
-=======================
+-------------------------
 
 Needed::
 
@@ -39,7 +55,7 @@ Uncomment::
 
 
 3. Install TeleCaster
-=====================
+----------------------
 
 Untar the archive. For example::
     
@@ -52,7 +68,7 @@ Run the install script::
 
 
 4. Configuration
-================
+------------------
 
 Edit the following files to setup TeleCaster. Please be careful with the XML syntax::
 
@@ -65,7 +81,7 @@ and, ONLY if needed::
 
 
 5. Start audio deamons
-======================
+------------------------
 
 Just reboot your machine or start the deamons manually:: 
 
@@ -74,7 +90,7 @@ Just reboot your machine or start the deamons manually::
 
 
 6. Configure Apache2
-====================
+----------------------
 
 Configure your apache VirtualHost editing /etc/apache2/sites-available/telecaster.conf
 
@@ -92,7 +108,7 @@ Reload Apache::
 
 
 7. Usage 
-========
+----------
 
 Browse the TeleCaster web control page:
 
@@ -106,11 +122,11 @@ To change the form options, just edit the conf file as root::
     
 
 8. Contact
-==========
+------------
 
 Any questions, suggestions ? Please post a ticket on the dev platform:
     
-    http://svn.parisson.org/telecaster
+    https://github.com/yomguy/TeleCaster-CGI
 
 or contact the main developer:
 
