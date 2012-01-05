@@ -1,10 +1,12 @@
 
 TeleCaster is a web controlled audio/video recording and broadcasting system.
+
 It is written in python and freely available for Linux.
 
 
 ARCHITECTURE
 ============
+
 Build and install well on Debian (>= Lenny) or Ubuntu/Kubuntu (>= 10.10)
 
 
@@ -12,18 +14,19 @@ MORE INFOS
 ==========
 
 GitHub: https://github.com/yomguy/TeleCaster-CGI
+
 Twitter : @parisson_studio
 
 
-INSTALL TeleCaster
-==================
+INSTALLATION
+=============
 
 
 1. Operating System
 --------------------
 
 TeleCaster now only works on GNU/Linux systems. The installer and the following instructions
-are based on Debian like software management so that it should work on Debian (>= Lenny) 
+are based on Debian like software management so that it should work on Debian (>= Lenny)
 or Ubuntu / Kubuntu (>= 10.4). So please install one of these OS before.
 
 
@@ -34,36 +37,37 @@ Needed::
 
     sudo aptitude update
 
-    sudo aptitude install python python-dev python-xml python-libxml2 python-setuptools python-twitter python-liblo python-mutagen \
-                        icecast2 apache2 apache2-suexec jackd libjack-dev vorbis-tools procps meterbridge fluxbox \
-                        vnc4server vncviewer swh-plugins jack-rack libshout3 libshout3-dev libmad0-dev libogg-dev g++
-
-Warning: on Debian Squeeze or recent Ubuntu, change libjack-dev to libjack-jackd2-dev
+    sudo aptitude install python python-dev python-libxml2 python-setuptools python-twitter python-liblo python-mutagen \
+                        icecast2 apache2 apache2-suexec jackd libjack-jackd2-dev vorbis-tools procps meterbridge fluxbox \
+                        vnc4server vncviewer swh-plugins jack-rack libshout3 libshout3-dev libmad0-dev libogg-dev g++ \
+                        libgstreamer0.10-0 gstreamer0.10-plugins-good gstreamer0.10-plugins-base gstreamer0.10-plugins-bad \
+                        gstreamer-tools git-core python-pip
 
 Optional::
 
-    sudo aptitude install libfaac-dev libmp3lame-dev libflac-dev 
+    sudo aptitude remove --purge pulseaudio
+    sudo aptitude install libfaac-dev libmp3lame-dev libflac-dev
 
 Note that obtaining and installing a preempt RT kernel is STRONGLY advised to get a good audio (JACK) stability.
 Moreover, edit the pam conf file to get RT "su" pam limits at boot::
-    
+
     sudo vi /etc/pam.d/su
-    
+
 Uncomment::
-    
+
     session    required   pam_limits.so
 
 
 3. Install TeleCaster
 ----------------------
 
-Untar the archive. For example::
-    
-    tar xzf telecaster-0.5.tar.gz
-    
-Run the install script::
-    
-    cd telecaster-0.5/
+Get the source code with Git::
+
+    git clone https://github.com/yomguy/TeleCaster-CGI
+
+and run the install script::
+
+    cd TeleCaster-CGI
     sudo python install.py
 
 
@@ -83,7 +87,7 @@ and, ONLY if needed::
 5. Start audio deamons
 ------------------------
 
-Just reboot your machine or start the deamons manually:: 
+Just reboot your machine or start the deamons manually::
 
     sudo /etc/init.d/jackd start
     sudo /etc/init.d/vncserver start
@@ -95,11 +99,11 @@ Just reboot your machine or start the deamons manually::
 Configure your apache VirtualHost editing /etc/apache2/sites-available/telecaster.conf
 
 Enable the VirtualHost::
-    
+
     sudo a2ensite telecaster.conf
-    
+
 Maybe remove the default VirtualHost::
-    
+
     sudo rm /etc/apache2/sites-enabled/000-default
 
 Reload Apache::
@@ -107,7 +111,7 @@ Reload Apache::
     sudo /etc/init.d/apache2 reload
 
 
-7. Usage 
+7. Usage
 ----------
 
 Browse the TeleCaster web control page:
@@ -117,15 +121,14 @@ Browse the TeleCaster web control page:
 Fill in the form and start any free recording and broadcasting stream !
 
 To change the form options, just edit the conf file as root::
-    
-    sudo vi /etc/telecaster/telecaster.xml
-    
 
-8. Contact
-------------
+    sudo vi /etc/telecaster/telecaster.xml
+
+Contact
+=========
 
 Any questions, suggestions ? Please post a ticket on the dev platform:
-    
+
     https://github.com/yomguy/TeleCaster-CGI
 
 or contact the main developer:

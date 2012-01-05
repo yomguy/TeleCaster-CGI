@@ -50,7 +50,7 @@ def remove_svn(path):
 
 app_dir = os.getcwd()
 
-user = 'telecaster' 
+user = 'telecaster'
 home = '/home/' + user
 if not os.path.exists(home):
     print 'Please give some informations for the new "telecaster" user :'
@@ -59,6 +59,9 @@ if not os.path.exists(home):
 # compiling edcast-jack
 os.chdir(app_dir + '/vendor/edcast-jack')
 os.system('./configure; make; sudo make install')
+
+# Install DeeFuzzer
+os.system('sudo pip install deefuzzer')
 
 os.chdir(app_dir)
 install_dir = '/var/www/telecaster'
@@ -82,13 +85,13 @@ dir = '/etc/init.d/'
 for daemon in daemons:
     path = dir + daemon
     shutil.copy('conf'+path, dir)
-    
+
 dir = '/etc/default/'
 for daemon in daemons:
     path = dir + daemon
     if not os.path.exists(path):
 	shutil.copy('conf'+path, dir)
-	    
+
 init_link = '/etc/rc2.d/S97jackd'
 if not os.path.islink(init_link):
     os.symlink('/etc/init.d/jackd ', init_link)
@@ -102,14 +105,14 @@ for dir in home_dirs:
     home_dir = home + '/.' + dir
     if not os.path.exists(home_dir):
         shutil.copytree('conf/home/'+dir, home_dir, ignore=shutil.ignore_patterns('*.svn*'))
-        os.system('chown -R ' + user + ':' + user + ' ' + home_dir) 
+        os.system('chown -R ' + user + ':' + user + ' ' + home_dir)
 
 dir = 'media'
 home_dir = home + os.sep + dir
 if not os.path.exists(home_dir):
     shutil.copytree('conf/home/'+dir, home_dir, ignore=shutil.ignore_patterns('*.svn*'))
-    os.system('chown -R ' + user + ':' + user + ' ' + home_dir) 
-    
+    os.system('chown -R ' + user + ':' + user + ' ' + home_dir)
+
 apache_conf = '/etc/apache2/sites-available/telecaster.conf'
 if not os.path.exists(apache_conf):
     shutil.copy('conf'+apache_conf, apache_conf)
@@ -119,17 +122,17 @@ log_dirs = ['/var/log/telecaster', '/var/log/deefuzzer']
 for  dir in log_dirs:
     if not os.path.exists(dir):
         os.mkdir(dir)
-        os.system('chown -R ' + user + ':' + user + ' ' + dir) 
+        os.system('chown -R ' + user + ':' + user + ' ' + dir)
 
 print """
    Installation successfull !
-   
+
    Now, please :
    - configure your telecaster editing /etc/telecaster/telecaster.xml and /etc/telecaster/deefuzzer.xml
-   - configure your apache VirtualHost editing /etc/apache2/sites-available/telecaster.conf 
+   - configure your apache VirtualHost editing /etc/apache2/sites-available/telecaster.conf
 
    And use the TeleCaster system browsing http://localhost/telecaster/telecaster.py
-   
+
    See README for more infos.
    """
 
