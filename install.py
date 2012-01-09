@@ -41,110 +41,152 @@
 import os, sys
 import platform
 import shutil
+from optparse import OptionParser
 
-def remove_svn(path):
+
+def cleanup(path):
     for root, dirs, files in os.walk(path):
         for dir in dirs:
-            if '.svn' in dir:
+            if '.svn' in dir or '.git' in dir:
                 shutil.rmtree(root + os.sep + dir)
 
-app_dir = os.getcwd()
+class Install(object):
 
-user = 'telecaster'
-home = '/home/' + user
-if not os.path.exists(home):
-    print 'Please give some informations for the new "telecaster" user :'
-    os.system('adduser ' + user)
-    os.system('adduser ' + user + ' audio')
+    def __init__(self, options):
+        self.options = options
+        self.app_dir = os.getcwd()
+        self.user = 'telecaster'
+        self.home = '/home/' + self.user
 
-# compiling edcast-jack
-os.chdir(app_dir + '/vendor/edcast-jack')
-os.system('./configure; make; sudo make install')
+        self.install_dir = '/var/www/telecaster'
+        self.rss_dir = '/var/www/rss'
+        self.m3u_dir = '/var/www/m3u'
+        self.log_dir = '/var/log/telecaster'
+        self.deefuzzer_log_dir = '/var/log/deefuzzer'
+        self.conf_dir = '/etc/telecaster'
+        self.init_dirs = ['/etc/init.d/', '/etc/default/']
+        self.home_dirs = ['fluxbox', 'vnc']
+        self.media_dir = self.home + os.sep + 'media'
 
-# Install DeeFuzzer
-os.system('sudo pip install deefuzzer')
+        self.daemons = ['jackd', 'vncserver']
+        self.apache_conf = '/etc/apache2/sites-available/telecaster.conf'
 
-os.chdir(app_dir)
-install_dir = '/var/www/telecaster'
-if os.path.exists(install_dir):
-    shutil.rmtree(install_dir)
-shutil.copytree(app_dir, install_dir,ignore=shutil.ignore_patterns('edcast-jack*', 'deefuzzer*', '*.svn*', '*.bzr*'))
-os.system('chown -R ' + user + ':' + user + ' ' + install_dir)
-os.system('chmod 755 ' + install_dir + '/telecaster.py')
+    def create_user(self):
+        if not os.path.exists(self.home):
+            print 'Please give some informations for the new "telecaster" user :'
+            os.system('adduser ' + self.user)
+            os.system('adduser ' + self.user + ' audio')
 
-dir = '/var/www/rss'
-if not os.path.exists(dir):
-    os.mkdir(dir)
-os.system('chown -R ' + user + ':' + user + ' ' + dir)
+    def chown(self, dir):
+        os.system('chown -R ' + self.user + ':' + self.user + ' ' + dir)
 
-dir = '/var/www/m3u'
-if not os.path.exists(dir):
-    os.mkdir(dir)
-os.system('chown -R ' + user + ':' + user + ' ' + dir)
+    def install_deps(self):
+        # compiling edcast-jack
+        os.chdir(self.app_dir + '/vendor/edcast-jack')
+        os.system('./configure; make; make install')
 
-conf_dir = '/etc/telecaster'
-if not os.path.exists(conf_dir):
-    os.mkdir(conf_dir)
-    os.system('sudo chown '+user+ ':'+user+' '+conf_dir)
-in_files = os.listdir('conf'+conf_dir)
-for file in in_files:
-    if not os.path.exists(conf_dir+os.sep+file) and not '.svn' in file:
-        shutil.copy('conf'+conf_dir+os.sep+file, conf_dir+os.sep+file)
+        # Install DeeFuzzer
+        os.system('pip install deefuzzer')
 
-daemons = ['jackd', 'vncserver']
-dir = '/etc/init.d/'
-for daemon in daemons:
-    path = dir + daemon
-    shutil.copy('conf'+path, dir)
-    os.system('sudo chmod 755 '+path)
+    def install_app(self):
+        os.chdir(self.app_dir)
 
-dir = '/etc/default/'
-for daemon in daemons:
-    path = dir + daemon
-    if not os.path.exists(path):
-	shutil.copy('conf'+path, dir)
+        if os.path.exists(self.install_dir):
+            shutil.rmtree(self.install_dir)
 
-init_link = '/etc/rc2.d/S97jackd'
-if not os.path.islink(init_link):
-    os.system('ln -s /etc/init.d/jackd '+init_link)
+        shutil.copytree(self.app_dir, self.install_dir,ignore=shutil.ignore_patterns('edcast-jack*', 'deefuzzer*', '*.svn*', '*.bzr*', '*.git'))
+        os.system('chown -R ' + self.user + ':' + self.user + ' ' + self.install_dir)
+        os.system('chmod 755 ' + self.install_dir + '/telecaster.py')
 
-init_link = '/etc/rc2.d/S99vncserver'
-if not os.path.islink(init_link):
-    os.system('ln -s /etc/init.d/vncserver '+init_link)
+    def install_conf(self):
+        os.chdir(self.app_dir)
 
-home_dirs = ['fluxbox', 'vnc']
-for dir in home_dirs:
-    home_dir = home + '/.' + dir
-    if not os.path.exists(home_dir):
-        shutil.copytree('conf/home/'+dir, home_dir, ignore=shutil.ignore_patterns('*.svn*'))
-        os.system('chown -R ' + user + ':' + user + ' ' + home_dir)
+        in_files = os.listdir('conf'+self.conf_dir)
+        if not os.path.exists(self.conf_dir):
+            os.makedirs(self.conf_dir)
 
-dir = 'media'
-home_dir = home + os.sep + dir
-if not os.path.exists(home_dir):
-    shutil.copytree('conf/home/'+dir, home_dir, ignore=shutil.ignore_patterns('*.svn*'))
-    os.system('chown -R ' + user + ':' + user + ' ' + home_dir)
+        for file in in_files:
+            shutil.copy('conf'+self.conf_dir+os.sep+file, self.conf_dir+os.sep+file)
 
-apache_conf = '/etc/apache2/sites-available/telecaster.conf'
-if not os.path.exists(apache_conf):
-    shutil.copy('conf'+apache_conf, apache_conf)
-os.system('/etc/init.d/apache2 reload')
+        for dir in self.home_dirs:
+            home_dir = self.home + '/.' + dir
+            if not os.path.exists(home_dir):
+                shutil.copytree('conf/home/'+dir, home_dir, ignore=shutil.ignore_patterns('*.svn*'))
+                self.chown(dir)
 
-log_dirs = ['/var/log/telecaster', '/var/log/deefuzzer']
-for  dir in log_dirs:
-    if not os.path.exists(dir):
-        os.mkdir(dir)
-        os.system('chown -R ' + user + ':' + user + ' ' + dir)
+        dir = 'media'
+        if not os.path.exists(self.home+os.sep+dir):
+            shutil.copytree('conf/home/'+dir, self.home+os.sep+dir)
 
-print """
-   Installation successfull !
+        shutil.copy('conf'+self.apache_conf, self.apache_conf)
+        os.system('a2ensite telecaster.conf')
+        os.system('/etc/init.d/apache2 reload')
 
-   Now, please :
-   - configure your telecaster editing /etc/telecaster/telecaster.xml and /etc/telecaster/deefuzzer.xml
-   - configure your apache VirtualHost editing /etc/apache2/sites-available/telecaster.conf
+    def install_init(self):
+        os.chdir(self.app_dir)
 
-   And use the TeleCaster system browsing http://localhost/telecaster/telecaster.py
+        dirs = [self.rss_dir, self.m3u_dir, self.log_dir, self.deefuzzer_log_dir, self.conf_dir, self.media_dir]
+        for dir in dirs:
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+            self.chown(dir)
 
-   See README for more infos.
-   """
+        for init_dir in self.init_dirs:
+            for daemon in self.daemons:
+                path = init_dir + daemon
+                shutil.copy('conf'+path, dir)
+                os.system('sudo chmod 755 '+path)
+
+        init_link = '/etc/rc2.d/S97jackd'
+        if not os.path.islink(init_link):
+            os.system('ln -s /etc/init.d/jackd '+init_link)
+
+        init_link = '/etc/rc2.d/S99vncserver'
+        if not os.path.islink(init_link):
+            os.system('ln -s /etc/init.d/vncserver '+init_link)
+
+    def run(self):
+        if self.options['keepinit'] == False:
+            print 'Installing init files...'
+            self.install_init()
+        if self.options['keepmods'] == False:
+            print 'Installing dependencies...'
+            self.install_deps()
+        if self.options['keepconf'] == False:
+            print 'Installing config files...'
+            self.install_conf()
+        print 'Installing application...'
+        self.install_app()
+
+
+def main():
+    parser = OptionParser()
+    parser.add_option("-c", "--keepconf", dest="keepconf", default=False, action="store_true",
+                      help="do NOT overwrite config files")
+    parser.add_option("-i", "--keepinit", dest="keepinit", default=False, action="store_true",
+                      help="do NOT overwrite init files")
+    parser.add_option("-m", "--keepmods", dest="keepmods", default=False, action="store_true",
+                      help="do NOT overwrite or install modules")
+
+    (options, args) = parser.parse_args()
+    install = Install(vars(options))
+    install.run()
+
+    print """
+       Installation successfull !
+
+       Now, please :
+       - configure your telecaster editing /etc/telecaster/telecaster.xml and /etc/telecaster/deefuzzer.xml
+       - configure your apache VirtualHost editing /etc/apache2/sites-available/telecaster.conf
+
+       And use the TeleCaster system browsing http://127.0.0.1/telecaster/telecaster.py
+
+       See README for more infos.
+       """
+
+
+if __name__ == '__main__':
+    main()
+
+
 
