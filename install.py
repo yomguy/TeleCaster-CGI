@@ -111,8 +111,9 @@ class Install(object):
         for dir in self.home_dirs:
             home_dir = self.home + '/.' + dir
             if not os.path.exists(home_dir):
-                shutil.copytree('conf/home/'+dir, home_dir, ignore=shutil.ignore_patterns('*.svn*'))
-                self.chown(dir)
+                os.makedirs(home_dir)
+            os.system('cp -r conf/home/'+dir + ' ' + home_dir)
+            self.chown(home_dir)
 
         dir = 'media'
         if not os.path.exists(self.home+os.sep+dir):
@@ -144,6 +145,8 @@ class Install(object):
         init_link = '/etc/rc2.d/S99vncserver'
         if not os.path.islink(init_link):
             os.system('ln -s /etc/init.d/vncserver '+init_link)
+
+
 
     def run(self):
         if self.options['keepinit'] == False:
