@@ -2,5 +2,5 @@
 
 # Start TeleCaster video channel
 
-telecaster/tc_video_simple_webm_stream.sh
+/home/telecaster/.fluxbox/telecaster/tc_video_simple_webm_stream.sh
  
