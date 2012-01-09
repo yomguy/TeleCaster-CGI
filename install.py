@@ -109,7 +109,7 @@ class Install(object):
             home_dir = self.home + '/.' + dir
             if not os.path.exists(home_dir):
                 os.makedirs(home_dir)
-            os.system('cp -r conf/home/'+dir + ' ' + home_dir)
+            os.system('cp -r conf/home/'+dir + '/* ' + home_dir)
             self.chown(home_dir)
 
         shutil.copy('conf'+self.apache_conf, self.apache_conf)
@@ -119,7 +119,7 @@ class Install(object):
     def install_init(self):
         os.chdir(self.app_dir)
 
-        dirs = [self.rss_dir, self.m3u_dir, self.log_dir, self.deefuzzer_log_dir, self.conf_dir, self.media_dir]
+        dirs = [self.rss_dir, self.m3u_dir, self.log_dir, self.deefuzzer_log_dir, self.conf_dir]
         for dir in dirs:
             if not os.path.exists(dir):
                 os.makedirs(dir)
