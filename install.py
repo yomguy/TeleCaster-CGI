@@ -116,6 +116,9 @@ class Install(object):
         os.system('a2ensite telecaster.conf')
         os.system('/etc/init.d/apache2 reload')
 
+        dir = '/etc/pm/'
+        os.system('cp -r conf' + dir + '* ' + dir)
+
     def install_init(self):
         os.chdir(self.app_dir)
 

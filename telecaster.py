@@ -35,7 +35,7 @@
 # Author: Guillaume Pellerin <yomguy@parisson.com>
 """
 
-version = '0.5.5'
+version = '0.5.6'
 
 import os
 import re
@@ -73,7 +73,7 @@ class TeleCaster:
             self.deefuzzer_path = '/usr/local/bin/deefuzzer'
         elif os.path.exists('/usr/bin/deefuzzer'):
             self.deefuzzer_path = '/usr/bin/deefuzzer'
-            
+
     def transition_head(self):
         html_file = open('telecaster_starting_head.html', 'r')
         html = html_file.read()
@@ -88,7 +88,7 @@ class TeleCaster:
 
     def main(self):
         edcast_pid = get_pid('edcast_jack', self.uid)
-        
+
         deefuzzer_pid = get_pid(self.deefuzzer_path+' '+self.user_dir+os.sep+'deefuzzer.xml', self.uid)
         writing = edcast_pid != []
         casting = deefuzzer_pid != []
@@ -104,7 +104,7 @@ class TeleCaster:
                         'session': '',
                         'professor': '',
                         'comment': ''}
-                        
+
             for data in self.conference_dict:
                 if not form.has_key(data):
                     self.conference_dict[data] = 'Inconnu'
@@ -113,7 +113,7 @@ class TeleCaster:
                     if '....' in value:
                         self.conference_dict[data] = 'Inconnu'
                     else:
-                        value = re.sub(r'\W+', '_', value) 
+                        value = re.sub(r'\W+', '_', value)
                         self.conference_dict[data] = value.decode('utf-8')
 
             self.conference_dict['title'] = self.title
