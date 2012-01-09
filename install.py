@@ -65,9 +65,6 @@ class Install(object):
         self.deefuzzer_log_dir = '/var/log/deefuzzer'
         self.conf_dir = '/etc/telecaster'
         self.init_dirs = ['/etc/init.d/', '/etc/default/']
-        self.home_dirs = ['fluxbox', 'vnc']
-        self.media_dir = self.home + os.sep + 'media'
-
         self.daemons = ['jackd', 'vncserver']
         self.apache_conf = '/etc/apache2/sites-available/telecaster.conf'
 
@@ -108,16 +105,12 @@ class Install(object):
         for file in in_files:
             shutil.copy('conf'+self.conf_dir+os.sep+file, self.conf_dir+os.sep+file)
 
-        for dir in self.home_dirs:
+        for dir in os.listdir('conf/home'):
             home_dir = self.home + '/.' + dir
             if not os.path.exists(home_dir):
                 os.makedirs(home_dir)
             os.system('cp -r conf/home/'+dir + ' ' + home_dir)
             self.chown(home_dir)
-
-        dir = 'media'
-        if not os.path.exists(self.home+os.sep+dir):
-            shutil.copytree('conf/home/'+dir, self.home+os.sep+dir)
 
         shutil.copy('conf'+self.apache_conf, self.apache_conf)
         os.system('a2ensite telecaster.conf')
@@ -146,7 +139,7 @@ class Install(object):
         if not os.path.islink(init_link):
             os.system('ln -s /etc/init.d/vncserver '+init_link)
 
-
+        os.system('cp -r conf/usr/* /usr/')
 
     def run(self):
         if self.options['keepinit'] == False:

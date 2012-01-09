@@ -12,7 +12,7 @@
     </deefuzzer>
     <media>
         <record>true</record>
-        <play_dir>/home/telecaster/media/ogg</play_dir>
+        <play_dir>/home/telecaster/.telecaster/media/ogg</play_dir>
         <rec_dir>/home/telecaster/archives</rec_dir>
         <format>ogg</format>
         <bitrate>64</bitrate>
