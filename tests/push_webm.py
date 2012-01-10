@@ -55,10 +55,10 @@ class Streamer(object):
 		c.setopt(pycurl.URL, self.url)
 		c.setopt(pycurl.UPLOAD, 1)
 		#c.setopt(pycurl.READFUNCTION, FileReader(self.file).read_callback)
-		c.setopt(pycurl.READFUNCTION, RelayReader(self.relay).read_callback)
 		#c.setopt(pycurl.READFUNCTION, self.file.read)
-		filesize = os.path.getsize(self.media)
-		c.setopt(pycurl.INFILESIZE, filesize)
+		c.setopt(pycurl.READFUNCTION, RelayReader(self.relay).read_callback)
+		#filesize = os.path.getsize(self.media)
+		#c.setopt(pycurl.INFILESIZE, filesize)
 		c.perform()
 		c.close()
 		
