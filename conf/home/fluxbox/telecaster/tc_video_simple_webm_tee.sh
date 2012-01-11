@@ -14,7 +14,8 @@ gst-launch v4l2src device=/dev/video0 ! video/x-raw-yuv, width=$WIDTH, height=$H
 	jackaudiosrc connect=1 \
 	! queue ! audioconvert ! queue ! vorbisenc quality=0.3 ! queue ! muxout.  \
 	webmmux streamable=true name=muxout \
-	! queue ! tcpserversink host=127.0.0.1 port=9000 protocol=none \
+	! tee name=t ! queue ! tcpserversink host=127.0.0.1 port=9000 protocol=none \
+	t. ! queue ! filesink location=/home/telecaster/trash/test.webm \
 	> /dev/null &
 
 sleep 4
