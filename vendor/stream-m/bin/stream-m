@@ -1,0 +1,3 @@
+#!/bin/sh
+
+java -cp /usr/local/lib/stream-m/lib/stream-m.jar StreamingServer $1

@@ -64,8 +64,9 @@ class Install(object):
         self.log_dir = '/var/log/telecaster'
         self.deefuzzer_log_dir = '/var/log/deefuzzer'
         self.conf_dir = '/etc/telecaster'
+        self.stream_m_conf_dir = '/etc/stream-m'
         self.init_dirs = ['/etc/init.d/', '/etc/default/']
-        self.daemons = ['jackd', 'vncserver']
+        self.daemons = ['jackd', 'vncserver', 'stream-m']
         self.apache_conf = '/etc/apache2/sites-available/telecaster.conf'
 
     def create_user(self):
@@ -85,6 +86,13 @@ class Install(object):
         # Install DeeFuzzer
         os.system('pip install deefuzzer')
 
+        # Install Stream-m
+        os.chdir(self.app_dir)
+        os.system('cp -ra vendor/stream-m /usr/local/lib/')
+        init_link = '/usr/local/bin/stream-m'
+        if not os.path.islink(init_link):
+            os.system('ln -s /usr/local/lib/stream-m/bin/stream-m '+init_link)
+
     def install_app(self):
         os.chdir(self.app_dir)
 
@@ -98,12 +106,13 @@ class Install(object):
     def install_conf(self):
         os.chdir(self.app_dir)
 
-        in_files = os.listdir('conf'+self.conf_dir)
-        if not os.path.exists(self.conf_dir):
-            os.makedirs(self.conf_dir)
-
-        for file in in_files:
-            shutil.copy('conf'+self.conf_dir+os.sep+file, self.conf_dir+os.sep+file)
+        for conf_dir in list(self.conf_dir, self.stream_m_conf_dir):
+            in_files = os.listdir('conf'+conf_dir)
+            if not os.path.exists(conf_dir):
+                os.makedirs(conf_dir)
+            for file in in_files:
+                shutil.copy('conf'+conf_dir+os.sep+file, conf_dir+os.sep+file)
+            self.chown(conf_dir)
 
         for dir in os.listdir('conf/home'):
             home_dir = self.home + '/.' + dir
@@ -122,7 +131,7 @@ class Install(object):
     def install_init(self):
         os.chdir(self.app_dir)
 
-        dirs = [self.rss_dir, self.m3u_dir, self.log_dir, self.deefuzzer_log_dir, self.conf_dir]
+        dirs = [self.rss_dir, self.m3u_dir, self.log_dir, self.deefuzzer_log_dir, self.conf_dir,  self.stream_m_conf_dir]
         for dir in dirs:
             if not os.path.exists(dir):
                 os.makedirs(dir)
@@ -141,6 +150,10 @@ class Install(object):
         init_link = '/etc/rc2.d/S99vncserver'
         if not os.path.islink(init_link):
             os.system('ln -s /etc/init.d/vncserver '+init_link)
+
+        init_link = '/etc/rc2.d/S98stream-m'
+        if not os.path.islink(init_link):
+            os.system('ln -s /etc/init.d/stream-m '+init_link)
 
         os.system('cp -r conf/usr/* /usr/')
 
@@ -175,12 +188,17 @@ def main():
        Installation successfull !
 
        Now, please :
-       - configure your telecaster editing /etc/telecaster/telecaster.xml and /etc/telecaster/deefuzzer.xml
-       - configure your apache VirtualHost editing /etc/apache2/sites-available/telecaster.conf
+        - configure your telecaster editing:
+            /etc/telecaster/telecaster.xml
+            /etc/telecaster/deefuzzer.xml
 
-       And use the TeleCaster system browsing http://127.0.0.1/telecaster/telecaster.py
+        - configure your apache VirtualHost editing /etc/apache2/sites-available/telecaster.conf
 
-       See README for more infos.
+        - REBOOT to setup audio and video servers !
+
+        - use the TeleCaster system browsing http://127.0.0.1/telecaster/telecaster.py
+
+        See README for more infos.
        """
 
 
