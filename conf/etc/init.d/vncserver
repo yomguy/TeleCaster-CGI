@@ -11,7 +11,7 @@
 
 DAEMON=/usr/bin/vncserver
 USER=
-OPTIONS="/etc/stream-m/server.conf"
+OPTIONS=""
 LOG=/var/log/vncserver.log
 PIDFILE=/var/run/vncserver.pid
 PORT=1

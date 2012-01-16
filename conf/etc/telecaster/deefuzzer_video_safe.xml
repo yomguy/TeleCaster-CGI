@@ -28,6 +28,7 @@
             <tags>bla bla</tags>
         </twitter>
         <server>
+            <type>stream-m</type>
             <host>127.0.0.1</host>
             <port>8080</port>
             <sourcepassword>source2parisson</sourcepassword>
@@ -45,8 +46,8 @@
         <infos>
             <url>http://parisson.com.com</url>
             <genre>Vocal</genre>
-            <name>telecaster_video_safe</name>
-            <short_name>telecaster_video_safe</short_name>
+            <name>safe</name>
+            <short_name>publish/safe</short_name>
             <description>TeleCaster safe video stream</description>
         </infos>
         <rss>
