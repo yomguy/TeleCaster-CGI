@@ -112,7 +112,6 @@ class Install(object):
                 os.makedirs(conf_dir)
             for file in in_files:
                 shutil.copy('conf'+conf_dir+os.sep+file, conf_dir+os.sep+file)
-            self.chown(conf_dir)
 
         for dir in os.listdir('conf/home'):
             home_dir = self.home + '/.' + dir
