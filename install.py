@@ -106,7 +106,7 @@ class Install(object):
     def install_conf(self):
         os.chdir(self.app_dir)
 
-        for conf_dir in list(self.conf_dir, self.stream_m_conf_dir):
+        for conf_dir in [self.conf_dir, self.stream_m_conf_dir]:
             in_files = os.listdir('conf'+conf_dir)
             if not os.path.exists(conf_dir):
                 os.makedirs(conf_dir)
@@ -140,7 +140,7 @@ class Install(object):
         for init_dir in self.init_dirs:
             for daemon in self.daemons:
                 path = init_dir + daemon
-                shutil.copy('conf'+path, dir)
+                shutil.copy('conf'+path, path)
                 os.system('sudo chmod 755 '+path)
 
         init_link = '/etc/rc2.d/S97jackd'
