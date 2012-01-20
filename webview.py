@@ -150,7 +150,7 @@ class WebView(FieldStorage):
 
     def video(self):
         print "<div style=\"float : left;\">"
-        print "<video controls=\"controls\" preload=\"auto\" autoplay=\"auto\" ><source src=\"http://"+self.ip+":8000/telecaster_live_video.ogg\" type=\"video/ogg\" /></video>"
+        print "<video controls=\"controls\" preload=\"auto\" autoplay=\"auto\" ><source src=\"http://"+self.ip+":9000/\" type=\"video/webm\" /></video>"
         print "</div>"
 
     def hardware_data(self):
@@ -281,11 +281,6 @@ class WebView(FieldStorage):
         self.colophon()
         self.footer()
     
-    def video(self):
-        print "<div style=\"float : left; margin: 5px;\">"
-        print "<video width=\"320\" height=\"180\" controls=\"controls\" preload=\"auto\" autoplay=\"auto\" ><source src=\"http://"+self.ip+":8000/telecaster_live_video.ogg\" type=\"video/ogg\" /></video>"
-        print "</div>"
-
     def stop_form(self, conference_dict, writing, casting):
         department = conference_dict['department']
         conference = conference_dict['conference']
