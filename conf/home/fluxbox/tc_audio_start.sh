@@ -23,8 +23,8 @@ sleep 3
 jack_disconnect jack_rack:out_2 LIVE:in_2
 jack_connect jack_rack:out_1  LIVE:in_1
 jack_connect jack_rack:out_1  LIVE:in_2
-jack_connect jack_rack:out_1  system:playback_1
-jack_connect jack_rack:out_1  system:playback_2
+#jack_connect jack_rack:out_1  system:playback_1
+#jack_connect jack_rack:out_1  system:playback_2
 
 # STEREO setup
 #jack_connect jack_rack:out_1  LIVE:in_1
