@@ -1,6 +1,6 @@
 <deefuzzer>
-    <log>/var/log/deefuzzer/telecaster_safe.log</log>
-    <m3u>/var/www/m3u/telecaster_safe.m3u</m3u>
+    <log>/var/log/deefuzzer/telecaster_audio_safe.log</log>
+    <m3u>/var/www/m3u/telecaster_audio_safe.m3u</m3u>
 
     <station>
         <control>
@@ -28,6 +28,7 @@
             <tags>bla bla</tags>
         </twitter>
         <server>
+            <type>icecast</type>
             <host>127.0.0.1</host>
             <port>8000</port>
             <sourcepassword>source2parisson</sourcepassword>
