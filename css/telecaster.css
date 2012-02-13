@@ -74,7 +74,7 @@ div.hardware {
     text-align: left;
     margin-top: 10px;
     border: 1px dotted #999;
-    padding: 6px;
+    padding: 1ex;
     background-color: #eee;
     display: block;
 }
@@ -92,13 +92,18 @@ div.form { background-color: #FFFFFF;
 table.form {
     border: 0px;
     border-collapse: separate;
-    border-spacing: 8px
+    border-spacing: 8px;
+}
+
+table.form tr {
+   width: 50px;
 }
 
 table.hardware {
     border: 0px;
     border-collapse: separate;
-    border-spacing: 2px
+    border-spacing: 2px;
+    padding: 1ex;
 }
 
 /* BUTTONS */

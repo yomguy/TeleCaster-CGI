@@ -214,23 +214,23 @@ class WebView(FieldStorage):
         print "<td>%s</td></tr>" % jackd_info
         print "<tr><td>Encoder</td><TD> : </TD>"
         print "<td>%s</td></tr>" % casting
-        print "<tr><td><div class=\"buttons\">"
+        print "</table>"
+        print "<div>"
+        print "<div class=\"buttons\">"
         if self.writing:
             print "<button class=\"positive\"><img src=\"img/drive_add.png\" alt=\"\">Recording...</button>"
         else:
             print "<button class=\"negative\"><img src=\"img/drive_error.png\" alt=\"\">NOT Recording !</button>"
-        print "</div></td>"
-        print "<td></td>"
-        print "<td><div class=\"buttons\">"
+        print "</div><br /><br />"
+        print "<div class=\"buttons\">"
         if not self.ip == 'localhost' and self.writing:
             print "<button class=\"positive\"><img src=\"img/transmit_add.png\" alt=\"\">Broadcasting...</button>"
         else:
             print "<button class=\"negative\"><img src=\"img/transmit_error.png\" alt=\"\">NOT Broadcasting !</button>"
         print "</div>"
-        print "</td></tr>"
-        print "</table>"
         print "</div>"
-
+        print "</div>"
+	
 
     def start_form(self, writing, casting, message=''):
         self.casting = writing
@@ -248,13 +248,13 @@ class WebView(FieldStorage):
         print "<TR><TH align=\"left\">Titre</TH><TD> : </TD><TD>"+self.title+"</TD></TR>"
         print "<TR><TH align=\"left\">D&eacute;partement</TH><TD> : </TD>"
         print "<TD><select name=\"department\" onChange=\"choix(this.form)\">"
-        print "<option>...........Choisissez un d&eacute;partement...........</option>"
+        print "<option>Choisissez un d&eacute;partement...</option>"
         for department in self.departments:
             print "<option value=\""+department['name']+"\">"+department['name']+"</option>"
         print "</select></TD></TR>"
         print "<TR><TH align=\"left\">Conf&eacute;rence</TH><TD> : </TD>"
         print "<TD><select name=\"conference\">"
-        print "<option>...........Choisissez une conf&eacute;rence...........</option>"
+        print "<option>Choisissez une conf&eacute;rence...</option>"
         for i in range(1,self.conference_nb_max):
             print "<option></option>"
         print "</select></TD></TR>"
@@ -268,6 +268,7 @@ class WebView(FieldStorage):
         print "<TD><INPUT type = text name = \"comment\"></TD></TR>"
         print "</table>"
         print "</div>"
+        print "<br /><br /><br />"
         print "<div class=\"tools\">"
         print "<div class=\"buttons\">"
         print "<button type=\"submit\" class=\"positive\"><img src=\"img/arrow_refresh.png\" alt=\"\">Refresh</button>"
@@ -307,6 +308,7 @@ class WebView(FieldStorage):
         print "<TR><TH align=\"left\">Commentaire</TH><TD> : </TD><TD>"+comment+"</TD></TR>"
         print "</table><br />"
         print "</div>"
+        print "<br /><br /><br />"
         print "<div class=\"tools\">"
         print "<div class=\"buttons\">"
         print "<button type=\"submit\"><img src=\"img/arrow_refresh.png\" alt=\"\">Refresh</button>"
