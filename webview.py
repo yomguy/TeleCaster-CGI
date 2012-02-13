@@ -280,7 +280,7 @@ class WebView(FieldStorage):
         print "</form>"
         self.colophon()
         self.footer()
-    
+
     def stop_form(self, conference_dict, writing, casting):
         department = conference_dict['department']
         conference = conference_dict['conference']
@@ -290,7 +290,7 @@ class WebView(FieldStorage):
         self.mount_point ='_-_'.join([self.short_name,department,conference])+'.'+self.format
         self.writing = writing
         self.casting = casting
-        self.refresh = True
+        self.refresh = False
 
         self.header()
         self.sub_header()
@@ -317,7 +317,7 @@ class WebView(FieldStorage):
         print "</div>"
         print "</div>"
         print "</form>"
-        
+
         self.colophon()
         self.footer()
 
