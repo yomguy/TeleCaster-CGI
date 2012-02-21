@@ -41,7 +41,7 @@ Needed::
                         icecast2 apache2 apache2-suexec jackd libjack-jackd2-dev vorbis-tools procps meterbridge fluxbox \
                         vnc4server vncviewer swh-plugins jack-rack libshout3 libshout3-dev libmad0-dev libogg-dev g++ \
                         libgstreamer0.10-0 gstreamer0.10-plugins-good gstreamer0.10-plugins-base gstreamer0.10-plugins-bad \
-                        gstreamer-tools git-core python-pip make
+                        gstreamer-tools git-core python-pip make libmad0-dev
 
 Cleanup::
 
