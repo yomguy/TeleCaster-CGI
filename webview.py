@@ -150,7 +150,7 @@ class WebView(FieldStorage):
 
     def video(self):
         print "<div style=\"float : left;\">"
-        print "<video controls=\"controls\" preload=\"auto\" autoplay=\"auto\" ><source src=\"http://"+self.ip+":9000/\" type=\"video/webm\" /></video>"
+        print "<video controls preload=\"auto\" autoplay=\"auto\" ><source src=\"http://"+self.ip+":8080/consume/safe\" type=\"video/webm\" /></video>"
         print "</div>"
 
     def hardware_data(self):
