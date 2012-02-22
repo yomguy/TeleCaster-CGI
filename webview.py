@@ -117,6 +117,10 @@ class WebView(FieldStorage):
         print '      formulaire.conference.selectedIndex=0;}'
         print '</script>'
 
+        
+	print "<link href=\"http://vjs.zencdn.net/c/video-js.css\" rel=\"stylesheet\">"
+	print "<script src=\"http://vjs.zencdn.net/c/video.js\"></script>"
+        
         # rss ajax
         #print "<script type=\"text/javascript\" src=\"js/rssajax.js\"></script>"
         #print "<script type=\"text/javascript\">"
@@ -150,7 +154,8 @@ class WebView(FieldStorage):
 
     def video(self):
         print "<div style=\"float : left;\">"
-        print "<video controls preload=\"auto\" autoplay=\"auto\" ><source src=\"http://"+self.ip+":8080/consume/safe\" type=\"video/webm\" /></video>"
+        
+        print "<video id=\"my_video_1\" class=\"video-js vjs-default-skin\" controls preload=\"auto\" data-setup=\"{}\"><source src=\"http://"+self.ip+":8080/consume/safe\" type=\"video/webm\"></video>"
         print "</div>"
 
     def hardware_data(self):
