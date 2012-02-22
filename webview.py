@@ -49,7 +49,7 @@ class WebView(FieldStorage):
         FieldStorage.__init__(self)
         self.conf = conf
         self.version = version
-        self.interfaces = ['eth0', 'eth1', 'eth2', 'eth0-eth2', 'eth3', 'wlan0']
+        self.interfaces = ['eth0', 'eth1', 'eth2', 'eth0-eth2', 'eth3', 'wlan0','wlan1',]
         ip = ''
         for interface in self.interfaces:
             try:
