@@ -155,7 +155,7 @@ class WebView(FieldStorage):
     def video(self):
         print "<div style=\"float : left;\">"
         
-        print "<video id=\"my_video_1\" class=\"video-js vjs-default-skin\" controls preload=\"auto\" data-setup=\"{}\"><source src=\"http://"+self.ip+":8080/consume/safe\" type=\"video/webm\"></video>"
+        print "<video id=\"my_video_1\" class=\"video-js vjs-default-skin\" controls preload=\"auto\" width=\"360\" height=\"240\" data-setup=\"{}\"><source src=\"http://"+self.ip+":8080/consume/safe\" type=\"video/webm\"></video>"
         print "</div>"
 
     def hardware_data(self):
